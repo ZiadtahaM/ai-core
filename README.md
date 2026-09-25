@@ -1,20 +1,44 @@
-# AI Core
+# AI Core: Autonomous Agent Runtime & Execution Loops
 
-Core inference and prompting library for autonomous agents.
+Modular TypeScript runtime library providing standardized abstraction layers, evaluation heuristics, scoring pipelines, and execution loops for autonomous AI agents.
 
-![AI Core Modules](https://via.placeholder.com/1200x600.png?text=AI+Core+Modules)
+```mermaid
+graph TD
+    Trigger[Agent Ingestion Event] --> Runtime[Agent Runtime Loop]
+    Runtime --> Workflow[Workflow Step Orchestrator]
+    Workflow --> ToolExec[Tool Invocation Engine]
+    ToolExec --> Scoring[Result Scoring & Heuristic Verification]
+    Scoring -->|Score >= Threshold| Output[Verified Agent Result]
+    Scoring -->|Score < Threshold| Retry[Refinement & Self-Correction]
+    Retry --> Runtime
+```
 
-## Overview
-AI Core acts as the foundational shared library across various AI agent repositories. It centralizes strict typing, message formatting, and LLM communication logic to prevent code duplication.
+## Architecture & Module Organization
 
-## Tech Stack
-- **Language**: TypeScript
-- **Runtime**: Node.js
+AI Core acts as the centralized engine behind agentic workflows, enforcing strict data boundaries, monotonic execution tracking, and mistake-proofing contracts across microservices.
 
-## Architecture
-This project is structured as an NPM package or internal monorepo dependency. The `src/` directory contains pure, side-effect-free utility functions that manage prompt serialization, chunking, and memory formatting to enforce the standard OpenAI/Anthropic message shapes.
+### Core Modules
 
-## Local Setup
-1. Clone the repository.
-2. Run `npm install`.
-3. Build the TypeScript source with `npm run build` or `npx tsc`.
+- **Agent Definition (`src/agent/`)**: Strongly-typed agent state contracts, context memory stores, and instruction boundary schemas.
+- **Execution Loops (`src/loops/`)**: Deterministic step evaluation loops implementing bounded iteration limits, timeout ceilings, and circuit breakers.
+- **Scoring Engine (`src/scoring/`)**: Multi-dimensional output evaluation assessing syntactic validity, semantic relevance, and confidence metrics.
+- **Workflows (`src/workflows/`)**: Composable directed acyclic graph (DAG) pipelines orchestrating multi-step task execution.
+
+## Technology Stack
+
+- **Language**: TypeScript 5.2+ (Strict Mode)
+- **Runtime**: Node.js 20+ / Bun
+- **Packaging**: Standard ESModule / CommonJS dual builds
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Build TypeScript sources
+npm run build
+
+# Run test suite
+npm test
+```
